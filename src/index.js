@@ -134,8 +134,19 @@ function IpfsAPI (host_or_multiaddr, port) {
     data: argCommand('object/data'),
     stat: argCommand('object/stat'),
     links: argCommand('object/links'),
-    patch: function (file, opts, cb) {
-      return requestAPI('object/patch', [file].concat(opts), null, null, cb)
+    patch: {
+      rmLink: function(root, link, cb) {
+        return requestAPI('object/patch/rm-link', [root, link], null, null, cb)
+      },
+      setData: function(root, data, cb) {
+        return requestAPI('object/patch/set-data', [root], null, data, cb)
+      },
+      appendData: function (root, data, cb) {
+        return requestAPI('object/patch/append-data', [root], null, data, cb)
+      },
+      addLink: function(root, name, ref, cb) {
+        return requestAPI('object/patch/add-link', [root, name, ref], null, null, cb)
+      }
     }
   }
 
